@@ -10,11 +10,12 @@
 	
 	<properties>
 		<docker.image.prefix>kammana</docker.image.prefix>
-		<!-- ✅ ADD THESE TWO LINES -->
-		<maven.compiler.source>8</maven.compiler.source>
-		<maven.compiler.target>8</maven.compiler.target>
+		<!-- ✅ Java 17 compiler settings -->
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
+	
 	<dependencies>
 		<dependency>
 		    <groupId>com.oracle.bedrock</groupId>
@@ -30,21 +31,31 @@
 		</dependency>
 	</dependencies>
 
-	<!-- ✅ ADD THIS ENTIRE BUILD SECTION -->
 	<build>
 		<plugins>
+			<!-- ✅ Fix: Upgraded from 2.2 to 3.4.0 (Java 17 compatible) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.4.0</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<!-- ✅ Fix: Upgraded compiler plugin to latest -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.13.0</version>
 				<configuration>
-					<source>8</source>
-					<target>8</target>
+					<source>17</source>
+					<target>17</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
+	
 	<distributionManagement>
 		<snapshotRepository>
 		    <id>nexusRepo</id>
@@ -64,5 +75,5 @@
 		<url>http://repo1.maven.org/maven2</url>
 	    </pluginRepository>
 	</pluginRepositories>
-
+	
 </project>
